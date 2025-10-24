@@ -13,7 +13,7 @@
 [alias]
 	last = log -1 HEAD
 	# print default branch
-	default = !git branch -rl '*/HEAD' | awk -F/ '{print $NF}'
+	default = !git symbolic-ref refs/remotes/origin/HEAD | sed 's,^refs/remotes/origin/,,'
 	# log commits on current branch
 	l = !git default | xargs git cherry -v
 	# interactive fixup
