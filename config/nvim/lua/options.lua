@@ -38,5 +38,5 @@ vim.o.completeopt = "menu,menuone,noselect"
 vim.o.tabstop = 4
 vim.o.shiftwidth = 4
 
--- Magic mode!
-vim.o.magic = true
+-- whitespace chars
+vim.o.listchars = "space:·,tab: ,trail:•,eol:,nbsp:␣"

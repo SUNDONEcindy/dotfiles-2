@@ -10,17 +10,34 @@ local servers = {
 			telemetry = { enable = false },
 			diagnostics = {
 				disable = { "missing-fields", "inject-fields" },
-				globals = { "vim" },
+				globals = { "vim", "Snacks" },
 			},
 		},
 	},
 	marksman = {},
 	pyright = {},
+	ruff = {},
 	tailwindcss = {},
 	ts_ls = {},
 	vale_ls = { installVale = false },
-	yamlls = {},
+	yamlls = {
+		yaml = {
+			schemas = {
+				["https://raw.githubusercontent.com/docker/docker-agent/refs/heads/main/agent-schema.json"] = {
+					'**/cagent*.yaml',
+					'**/cagent*.yml',
+					'**/*cagent*.yaml',
+					'**/*cagent*.yml',
+					'**/agent.yaml',
+					'**/agent.yml',
+					'**/agents.yaml',
+					'**/agents.yml',
+				}
+			}
+		}
+	},
 	astro = {},
+	regal = {},
 }
 
 local on_attach = function(_, bufnr)
@@ -30,13 +47,10 @@ local on_attach = function(_, bufnr)
 	end
 	nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
 	nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-	nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
-	nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-	nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
-	nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-	nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
-	nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-	nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+	-- nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
+	-- nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
+	-- nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+	-- nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
 	nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
 	nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
@@ -62,6 +76,9 @@ return {
 		},
 		config = function(_, opts)
 			require("mason-lspconfig").setup(opts)
+
+			-- enable inlay hints
+			vim.lsp.inlay_hint.enable()
 
 			-- global defaults
 			vim.lsp.config("*", {
@@ -90,6 +107,9 @@ return {
 	},
 	{
 		"nvimtools/none-ls.nvim",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+		},
 		config = function()
 			local null_ls = require("null-ls")
 			null_ls.setup({
@@ -97,7 +117,6 @@ return {
 				sources = {
 					null_ls.builtins.diagnostics.markdownlint,
 					null_ls.builtins.formatting.prettier,
-					null_ls.builtins.formatting.black,
 				},
 			})
 		end

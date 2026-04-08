@@ -49,7 +49,7 @@
 	# delete branch
 	bd = branch -D
 	# delete all branches that were deleted on remote
-	prune-branches = !git fetch --prune && git branch -vv | grep ': gone]' | awk '{print $1}' | xargs git branch -D
+	prune-branches = !git fetch origin --prune && git branch -vv | grep ': gone]' | awk '{print $1}' | xargs -r git branch -D
 	# checkout default branch
 	cm = !git checkout "$(git default)"
 	# status
@@ -58,6 +58,8 @@
 	f = fetch
 	# word diff
 	wd = diff --word-diff
+	# show last edits to file
+	sl = log -1 -p --pretty="" --
 [pull]
 	ff = only
 [init]
