@@ -17,13 +17,3 @@ vim.keymap.set("i", "<A-k>", "<Esc>:m .-2<CR>==gi", { noremap = true })
 -- Previous and next buffer
 vim.keymap.set("n", "<A-h>", ":bp<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "<A-l>", ":bn<CR>", { noremap = true, silent = true })
-
--- Diagnostic keymaps
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = "Previous diagnostic" })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = "Next diagnostic" })
-vim.keymap.set('n', '<leader>k', vim.diagnostic.open_float, { desc = "Open floating diagnostics" })
--- vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = "[q] Add diagnostic to location list" })
-
--- Character count
-local charcount = require('charcount')
-vim.keymap.set('n', '<leader>cc', charcount.count_markdown_section, { desc = "Count characters in markdown section" })
