@@ -9,6 +9,7 @@ local servers = {
 	"pyright",
 	"regal",
 	"ruff",
+	"rumdl",
 	"tailwindcss",
 	"ts_ls",
 	"vale_ls",
